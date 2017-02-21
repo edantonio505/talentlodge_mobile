@@ -24,11 +24,11 @@ export default class Skills extends Component
        dataSource: ds.cloneWithRows([]),
        loaded: false
      };
-     this.getTracks(this);
+     this.getTracks();
    }
 
 
- getTracks(element){
+ getTracks(){
    fetch(base+'tracks/1',{
      method: 'GET',
      headers: {
@@ -40,8 +40,8 @@ export default class Skills extends Component
     .then((tracks) => {
      console.log(tracks);
 
-     element.setState({
-       dataSource: element.state.dataSource.cloneWithRows(tracks),
+     this.setState({
+       dataSource: this.state.dataSource.cloneWithRows(tracks),
        loaded: true
      });
     })
@@ -76,7 +76,7 @@ export default class Skills extends Component
     if (!this.state.loaded) {
       return this.renderLoadingView();
     } else {
-      return this.renderView(this);
+      return this.renderView();
     }   
   }
 }

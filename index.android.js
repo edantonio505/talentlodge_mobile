@@ -21,7 +21,7 @@ export default class talentlodge extends Component
     return (
       <View>
         <Landing />
-        <Skills/>
+        <Skills />
       </View>
     );
 

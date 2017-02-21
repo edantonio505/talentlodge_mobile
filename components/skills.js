@@ -24,8 +24,32 @@ export default class Skills extends Component
        dataSource: ds.cloneWithRows([]),
        loaded: false
      };
-     getTracks(this);
+     this.getTracks(this);
    }
+
+
+ getTracks(element){
+   fetch(base+'tracks/1',{
+     method: 'GET',
+     headers: {
+       'Accept': 'application/json',
+       'Content-Type': 'application/json',
+     }
+   })
+    .then((response) => response.json())
+    .then((tracks) => {
+     console.log(tracks);
+
+     element.setState({
+       dataSource: element.state.dataSource.cloneWithRows(tracks),
+       loaded: true
+     });
+    })
+    .catch((error) => {
+      console.error(error);
+   })
+   .done();
+ }
 
 
    renderLoadingView() {
@@ -57,31 +81,4 @@ export default class Skills extends Component
   }
 }
 
-
-
-
-
-// Ajax to get all the tracks
-function getTracks(element){
-  fetch(base+'tracks/1',{
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    }
-  })
-   .then((response) => response.json())
-   .then((tracks) => {
-    console.log(tracks);
-
-    element.setState({
-      dataSource: element.state.dataSource.cloneWithRows(tracks),
-      loaded: true
-    });
-   })
-   .catch((error) => {
-     console.error(error);
-  })
-  .done();
-}
 

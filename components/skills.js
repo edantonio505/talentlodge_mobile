@@ -13,7 +13,16 @@ import {
   ListView
 } from 'react-native';
 
-var base = 'http://dev.talentlodge.com/api/';
+
+
+/*============================================= 
+          skill api base config
+===============================================*/
+  var base = 'http://dev.talentlodge.com/api/skills';
+  // var base = 'http://192.168.0.13/api/skills';
+// -----------------------------------------------
+
+
 
 export default class Skills extends Component 
 {
@@ -29,7 +38,7 @@ export default class Skills extends Component
 
 
  getTracks(){
-   fetch(base+'tracks/1',{
+   fetch(base,{
      method: 'GET',
      headers: {
        'Accept': 'application/json',
@@ -51,23 +60,31 @@ export default class Skills extends Component
    .done();
  }
 
+   renderList(rowData) {
+    return (
+      <Text style={styles.listItems}>
+        {rowData.name}
+      </Text>
+
+    );
+   }
+
 
    renderLoadingView() {
      return (
        <View>
-         <Text>
+         <Text style={styles.text}>
            loading tracks
          </Text>
        </View>
      );
    }
 
-
    renderView(){
      return (
-       <View>
-         <Text>All Tanyas carita soundcloud tracks</Text>
-         <ListView dataSource={this.state.dataSource} renderRow={(rowData) => <Text>{rowData.title}</Text>}/>
+       <View  style={styles.listContainer}>
+
+         <ListView dataSource={this.state.dataSource} renderRow={this.renderList}/>
        </View>
      );
    }
@@ -82,3 +99,21 @@ export default class Skills extends Component
 }
 
 
+var styles = StyleSheet.create({
+  listContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems:'center',
+  },
+  text: {
+    color: 'white',
+    fontSize: 20
+  },
+  listItems: {
+    color: 'white',
+    textAlign:'center',
+    fontSize: 20,
+    margin:10,
+  }
+});

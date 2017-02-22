@@ -19,13 +19,23 @@ export default class talentlodge extends Component
 {
   render() {
     return (
-      <View>
-        <Landing />
+      <View style={styles.container}>
         <Skills />
       </View>
     );
 
   }
 }
+
+
+var styles = StyleSheet.create({
+  container: {
+    flex:1,
+    backgroundColor: '#38eeff',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+});
+
 
 AppRegistry.registerComponent('talentlodge', () => talentlodge);

@@ -10,7 +10,8 @@ import {
   StyleSheet,
   Text,
   View,
-  ListView
+  ListView,
+  TextInput
 } from 'react-native';
 
 
@@ -31,7 +32,8 @@ export default class Skills extends Component
      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
      this.state = {
        dataSource: ds.cloneWithRows([]),
-       loaded: false
+       loaded: false,
+       text: ''
      };
      this.getTracks();
    }
@@ -60,15 +62,7 @@ export default class Skills extends Component
    .done();
  }
 
-   renderList(rowData) {
-    return (
-      <Text style={styles.listItems}>
-        {rowData.name}
-      </Text>
-
-    );
-   }
-
+  
 
    renderLoadingView() {
      return (
@@ -83,11 +77,21 @@ export default class Skills extends Component
    renderView(){
      return (
        <View  style={styles.listContainer}>
-
          <ListView dataSource={this.state.dataSource} renderRow={this.renderList}/>
        </View>
      );
    }
+
+   renderList(rowData) {
+    return (
+      <Text style={styles.listItems}>
+        {rowData.name}
+      </Text>
+
+    );
+   }
+
+   
 
   render() {
     if (!this.state.loaded) {

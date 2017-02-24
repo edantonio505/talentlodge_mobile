@@ -55,11 +55,11 @@ export default class talentlodge extends Component
 
 
 
-  filterTracks(searchText, tracks) {
+  filterTracks(searchText, skills) {
     let text = searchText.toLowerCase();
-    return tracks.filter(
-      (track) => {
-        return track.name.toLowerCase().indexOf(text) !== -1;
+    return skills.filter(
+      (skill) => {
+        return skill.name.toLowerCase().indexOf(text) !== -1;
       }
     );
     
@@ -80,9 +80,9 @@ export default class talentlodge extends Component
       }
     })
      .then((response) => response.json())
-     .then((tracks) => {
+     .then((skills) => {
         
-          let filtered = this.filterTracks(this.state.searchText, tracks)
+          let filtered = this.filterTracks(this.state.searchText, skills)
         // 
           this.setState({
             dataSource: this.state.dataSource.cloneWithRows(filtered)

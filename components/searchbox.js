@@ -10,11 +10,35 @@ import {
 let border_radius =  8;
 
 export default class Searchbox extends Component {
+
+    constructor() {
+      super(); 
+      this.state = {
+        search: ''
+      };
+    }
+
+
+
+    updateSearch(event)
+    {   
+
+        console.log(event.nativeEvent.text);
+    }
+
+
+
+
     render() {
         return (
             
                 <View style={styles.inputContainer}>
-                <TextInput style={styles.searchBox} placeholder="Search for a skill" />
+                    <TextInput 
+                        underlineColorAndroid="rgba(0, 0, 0, 0)" 
+                        style={styles.searchBox} 
+                        placeholder="Search for a skill" 
+                        onChange={this.updateSearch}
+                    />
                 </View>
                 
         );
@@ -23,17 +47,14 @@ export default class Searchbox extends Component {
 
 
 var styles = StyleSheet.create({
-
-
     inputContainer: {
-        padding:20,
-         
-        
-      
+        paddingBottom:10,
+        paddingLeft: 20,
+        paddingRight: 20
     },
 
   searchBox:{
-        backgroundColor:'white',
+        backgroundColor:'rgb(255,255,255)',
         borderTopRightRadius: border_radius,
         borderTopLeftRadius: border_radius,
         borderBottomLeftRadius: border_radius,

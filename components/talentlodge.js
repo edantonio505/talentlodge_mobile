@@ -207,8 +207,6 @@ export default class talentlodge extends Component
       </TouchableOpacity>
     );
    }
-
-
 }
 
 

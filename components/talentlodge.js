@@ -24,8 +24,8 @@ let border_radius =  8;
 /*============================================= 
           skill api base config
 ===============================================*/
-  var base = 'http://dev.talentlodge.com/api/skills';
-  // var base = 'http://192.168.0.13/api/skills';
+  var base = 'http://dev.talentlodge.com/api/';
+  // var base = 'http://192.168.0.13/api/';
 // -----------------------------------------------
 
  
@@ -41,7 +41,7 @@ export default class talentlodge extends Component
       w: new Animated.Value(300),
       f: new Animated.Value(1)
     };
-    this.getTracks()
+    this.getSkills();
   }
 
 
@@ -89,16 +89,9 @@ export default class talentlodge extends Component
 
   updateSearch(event)
   {   
-      this.setState({
-          searchText: event.nativeEvent.text
-      })
-
-      this.getTracks();
+      this.setState({searchText: event.nativeEvent.text})
+      this.getSkills();
   }
-
-
-
-
 
   filterTracks(searchText, skills) 
   {
@@ -109,14 +102,9 @@ export default class talentlodge extends Component
       }
     );  
   }
-
-
-
-
-
   
-  getTracks(){
-    fetch(base,{
+  getSkills(){
+    fetch(base+'skills',{
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -127,7 +115,6 @@ export default class talentlodge extends Component
      .then((skills) => {
         
           let filtered = this.filterTracks(this.state.searchText, skills)
-        // 
           this.setState({
             dataSource: this.state.dataSource.cloneWithRows(filtered)
           });
@@ -138,6 +125,61 @@ export default class talentlodge extends Component
     .done();
   }
 
+
+  renderList(rowData) {
+    var that
+    return (
+      <TouchableOpacity 
+      key={rowData.id}
+      onPress={() => this._onPressButton(rowData.name)} 
+      carita={rowData.name}
+      style={{
+        height: 70, 
+        flex:1,
+        flexDirection: 'column', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomColor: 'white',
+        borderBottomWidth: 0.2,
+        backgroundColor: 'rgba(255,255,255,0.1)'
+      }}>
+        <Text style={styles.listItems}>{rowData.name}</Text>
+      </TouchableOpacity>
+    );
+   }
+
+
+
+  
+
+
+  _onPressButton(skill)
+  {
+      skill = skill.replace(" ", "+");
+      this.searchUsers(skill);
+  }
+
+  
+
+
+   searchUsers(skill){
+     fetch(base+'search/'+skill,{
+       method: 'GET',
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json',
+       }
+     })
+      .then((response) => response.json())
+      .then((users) => {
+         console.log(users);
+           
+      })
+      .catch((error) => {
+        console.error(error);
+     })
+     .done();
+   }
 
 
 
@@ -175,38 +217,7 @@ export default class talentlodge extends Component
         </View>
     </View>
     );
-
   }
-
-
-  _onPressButton(skill){
-
-      skill = skill.replace(" ", "+");
-      console.log(skill);
-  }
-
-
-  renderList(rowData) {
-    var that
-    return (
-      <TouchableOpacity 
-      key={rowData.id}
-      onPress={() => this._onPressButton(rowData.name)} 
-      carita={rowData.name}
-      style={{
-        height: 70, 
-        flex:1,
-        flexDirection: 'column', 
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderBottomColor: 'white',
-        borderBottomWidth: 0.2,
-        backgroundColor: 'rgba(255,255,255,0.1)'
-      }}>
-        <Text style={styles.listItems}>{rowData.name}</Text>
-      </TouchableOpacity>
-    );
-   }
 }
 
 

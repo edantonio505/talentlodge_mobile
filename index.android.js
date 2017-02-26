@@ -13,7 +13,10 @@ import {
   Image,
   KeyboardAvoidingView,
   TextInput,
-  ListView
+  ListView,
+  Keyboard,
+  Animated,
+  TouchableOpacity
 } from 'react-native';
 
 let border_radius =  8;
@@ -35,11 +38,54 @@ export default class talentlodge extends Component
     this.state = {
       searchText: '',
       tracks: {},
-      dataSource: ds.cloneWithRows([])
+      dataSource: ds.cloneWithRows([]),
+      w: new Animated.Value(300),
+      f: new Animated.Value(1)
     };
     this.getTracks()
   }
 
+
+
+  componentWillMount() {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
+  }
+
+
+
+  _keyboardDidShow () {
+    Animated.timing(
+      this.state.w, {
+        toValue: 100,
+        duration: 200
+      }
+    ).start();
+
+    Animated.timing(
+      this.state.f, {
+        toValue: 0,
+        duration: 200
+      }
+    ).start();
+    
+  }
+
+  _keyboardDidHide () {
+    Animated.timing(
+         this.state.w, {
+           toValue: 300, 
+           duration: 200
+         }
+       ).start();
+
+    Animated.timing(
+         this.state.f, {
+           toValue: 1,
+           duration: 200
+         }
+       ).start();
+  }
 
 
   updateSearch(event)
@@ -55,16 +101,15 @@ export default class talentlodge extends Component
 
 
 
-  filterTracks(searchText, skills) {
+  filterTracks(searchText, skills) 
+  {
     let text = searchText.toLowerCase();
     return skills.filter(
       (skill) => {
         return skill.name.toLowerCase().indexOf(text) !== -1;
       }
-    );
-    
+    );  
   }
-
 
 
 
@@ -95,15 +140,6 @@ export default class talentlodge extends Component
   }
 
 
-  renderList(rowData) {
-    return (
-      <Text style={styles.listItems}>
-        {rowData.name}
-      </Text>
-
-    );
-   }
-
 
 
 
@@ -111,45 +147,78 @@ export default class talentlodge extends Component
     return (
 
       <View style={styles.container}>
-          <View style={styles.logoCenter}>
-          <View style={styles.logoContainer}>
-            <Image style={styles.logo} source={require('./image/talentlodgelogo2.png')} />
-          </View>
-          </View>
 
-        <KeyboardAvoidingView behavior="padding">
-          <View  style={styles.inputContainer}>
-              <TextInput 
-                  underlineColorAndroid="rgba(0, 0, 0, 0)" 
-                  style={styles.searchBox} 
-                  placeholder="Search for a skill" 
-                  onChange={this.updateSearch.bind(this)}
-              />
-          </View>
-        </KeyboardAvoidingView>
+          {/* animate logo here */}
+          <Animated.View style={[styles.logoCenter, {flex: this.state.f}]}>
+            <Animated.View style={[styles.logoContainer, {flex: this.state.f, width: this.state.w}]}>
+              <Image style={styles.logo} source={require('./image/talentlodgelogo2.png')} />
+            </ Animated.View>
+          </ Animated.View>
+          {/* end animate logo here*/}
+
+        
+         <View  style={styles.inputContainer}>
+             <TextInput 
+                 underlineColorAndroid="rgba(0, 0, 0, 0)" 
+                 style={styles.searchBox} 
+                 placeholder="Search for a skill" 
+                 onChange={this.updateSearch.bind(this)}
+             />
+         </View>
 
 
         <View style={styles.listContainer} >
           <View  style={styles.listContainer}>
              <ListView 
               enableEmptySections={true}
-              dataSource={this.state.dataSource} renderRow={this.renderList}/>
+              dataSource={this.state.dataSource} renderRow={this.renderList.bind(this)}/>
            </View>
         </View>
-      </View>
+    </View>
     );
 
   }
+
+
+  _onPressButton(skill){
+
+      skill = skill.replace(" ", "+");
+      console.log(skill);
+  }
+
+
+  renderList(rowData) {
+    var that
+    return (
+      <TouchableOpacity 
+      key={rowData.id}
+      onPress={() => this._onPressButton(rowData.name)} 
+      carita={rowData.name}
+      style={{
+        height: 70, 
+        flex:1,
+        flexDirection: 'column', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomColor: 'white',
+        borderBottomWidth: 0.2,
+        backgroundColor: 'rgba(255,255,255,0.1)'
+      }}>
+        <Text style={styles.listItems}>{rowData.name}</Text>
+      </TouchableOpacity>
+    );
+   }
+
+
 }
 
 
 var styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: 'black', 
+    backgroundColor: '#111', 
   },
   logoCenter: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -162,7 +231,6 @@ var styles = StyleSheet.create({
   logoContainer:{
     flex: 1,
     flexDirection: 'column',
-    width: 300,
     justifyContent: 'center',
   },
   logo: {
@@ -172,24 +240,18 @@ var styles = StyleSheet.create({
     resizeMode: 'contain'
   },
     inputContainer: {
-        paddingBottom:10,
-        paddingLeft: 20,
-        paddingRight: 20
+        paddingBottom: 2,
+        paddingTop: 20
     },
 
   searchBox:{
         backgroundColor:'rgb(255,255,255)',
-        borderTopRightRadius: border_radius,
-        borderTopLeftRadius: border_radius,
-        borderBottomLeftRadius: border_radius,
-        borderBottomRightRadius: border_radius,
         textAlign:'center'
     },
     listContainer: {
       flex: 1,
       flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems:'center',
+      justifyContent: 'center'
     },
     text: {
       color: 'white',
@@ -200,7 +262,13 @@ var styles = StyleSheet.create({
       textAlign:'center',
       fontSize: 20,
       margin:10,
-    }
+    },
+    bubblechoice: {
+    height: window.height/8.335,
+    borderRadius: (window.height/8.3350)/2,
+    marginRight: 2,
+    width: window.height/8.335,
+  }
 });
 
 

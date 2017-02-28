@@ -253,7 +253,8 @@ var styles = StyleSheet.create({
 
   searchBox:{
         backgroundColor:'rgb(255,255,255)',
-        textAlign:'center'
+        textAlign:'center',
+        height: 60
     },
     listContainer: {
       flex: 1,

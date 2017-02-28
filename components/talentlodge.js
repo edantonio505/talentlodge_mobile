@@ -193,8 +193,13 @@ export default class Talentlodge extends Component
             <Animated.View style={[styles.logoContainer, {flex: this.state.f, width: this.state.w}]}>
               <Image style={styles.logo} source={require('../image/talentlodgelogo2.png')} />
             </ Animated.View>
+            <Text 
+            style={{textAlign:'center', color:'white'}}
+            >A community driven talent database where talented individuals can search and meet each other.</Text>
           </ Animated.View>
           {/* end animate logo here*/}
+
+
 
         
          <View  style={styles.inputContainer}>

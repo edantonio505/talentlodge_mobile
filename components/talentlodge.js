@@ -246,35 +246,34 @@ var styles = StyleSheet.create({
     height: null,
     resizeMode: 'contain'
   },
-    inputContainer: {
-        paddingBottom: 2,
-        paddingTop: 20
-    },
-
+  inputContainer: {
+      paddingBottom: 2,
+      paddingTop: 20
+  },
   searchBox:{
-        backgroundColor:'rgb(255,255,255)',
-        textAlign:'center',
-        height: 60
-    },
-    listContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'center'
-    },
-    text: {
-      color: 'white',
-      fontSize: 20
-    },
-    listItems: {
-      color: 'white',
-      textAlign:'center',
-      fontSize: 20,
-      margin:10,
-    },
-    bubblechoice: {
-    height: window.height/8.335,
-    borderRadius: (window.height/8.3350)/2,
-    marginRight: 2,
-    width: window.height/8.335,
-  }
+    backgroundColor:'rgb(255,255,255)',
+    textAlign:'center',
+    height: 60
+  },
+  listContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  text: {
+    color: 'white',
+    fontSize: 20
+  },
+  listItems: {
+    color: 'white',
+    textAlign:'center',
+    fontSize: 20,
+    margin:10,
+  },
+  bubblechoice: {
+  height: window.height/8.335,
+  borderRadius: (window.height/8.3350)/2,
+  marginRight: 2,
+  width: window.height/8.335,
+}
 });

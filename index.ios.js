@@ -6,6 +6,6 @@
 
 import React, { Component } from 'react';
 import {AppRegistry} from 'react-native';
-import talentlodge from './components/talentlodge.js';
+import Bootstrap from './components/bootstrap.js';
 
-AppRegistry.registerComponent('talentlodge', () => talentlodge);
+AppRegistry.registerComponent('talentlodge', () => Bootstrap);

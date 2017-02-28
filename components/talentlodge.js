@@ -18,8 +18,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-let border_radius =  8;
 
+import Results from './results.js';
 
 /*============================================= 
           skill api base config
@@ -29,7 +29,7 @@ let border_radius =  8;
 // -----------------------------------------------
 
  
-export default class talentlodge extends Component 
+export default class Talentlodge extends Component 
 { 
   constructor() {
     super(); 
@@ -172,8 +172,7 @@ export default class talentlodge extends Component
      })
       .then((response) => response.json())
       .then((users) => {
-         console.log(users);
-           
+        alert(JSON.stringify(users));
       })
       .catch((error) => {
         console.error(error);

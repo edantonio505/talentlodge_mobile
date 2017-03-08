@@ -130,19 +130,20 @@ export default class Talentlodge extends Component
     var that
     return (
       <TouchableOpacity 
-      key={rowData.id}
-      onPress={() => this._onPressButton(rowData.name)} 
-      carita={rowData.name}
-      style={{
-        height: 70, 
-        flex:1,
-        flexDirection: 'column', 
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderBottomColor: 'white',
-        borderBottomWidth: 0.2,
-        backgroundColor: 'rgba(255,255,255,0.1)'
-      }}>
+        key={rowData.id}
+        onPress={() => this._onPressButton(rowData.name)} 
+        carita={rowData.name}
+        style={{
+          height: 70, 
+          flex:1,
+          flexDirection: 'column', 
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderBottomColor: 'white',
+          borderBottomWidth: 0.2,
+          backgroundColor: 'rgba(255,255,255,0.1)'
+        }}
+      >
         <Text style={styles.listItems}>{rowData.name}</Text>
       </TouchableOpacity>
     );
@@ -163,6 +164,11 @@ export default class Talentlodge extends Component
 
 
    searchUsers(skill){
+
+      let navigator = this.props.navObject.navigator;
+      let index = this.props.navObject.index;
+      let routes = this.props.navObject.routes;
+
      fetch(base+'search/'+skill,{
        method: 'GET',
        headers: {
@@ -172,7 +178,8 @@ export default class Talentlodge extends Component
      })
       .then((response) => response.json())
       .then((users) => {
-        alert(JSON.stringify(users));
+          // Hrere I should send it to the next scene
+          if(index == 0){navigator.push({index:1, users: users})}
       })
       .catch((error) => {
         console.error(error);

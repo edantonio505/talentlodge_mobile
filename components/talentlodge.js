@@ -21,18 +21,18 @@ import {
 
 import Results from './results.js';
 
-/*============================================= 
+/*=============================================
           skill api base config
 ===============================================*/
   var base = 'http://dev.talentlodge.com/api/';
   // var base = 'http://192.168.0.13/api/';
 // -----------------------------------------------
 
- 
-export default class Talentlodge extends Component 
-{ 
+
+export default class Talentlodge extends Component
+{
   constructor() {
-    super(); 
+    super();
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       searchText: '',
@@ -67,13 +67,13 @@ export default class Talentlodge extends Component
         duration: 200
       }
     ).start();
-    
+
   }
 
   _keyboardDidHide () {
     Animated.timing(
          this.state.w, {
-           toValue: 300, 
+           toValue: 300,
            duration: 200
          }
        ).start();
@@ -88,21 +88,21 @@ export default class Talentlodge extends Component
 
 
   updateSearch(event)
-  {   
+  {
       this.setState({searchText: event.nativeEvent.text})
       this.getSkills();
   }
 
-  filterTracks(searchText, skills) 
+  filterTracks(searchText, skills)
   {
     let text = searchText.toLowerCase();
     return skills.filter(
       (skill) => {
         return skill.name.toLowerCase().indexOf(text) !== -1;
       }
-    );  
+    );
   }
-  
+
   getSkills(){
     fetch(base+'skills',{
       method: 'GET',
@@ -113,7 +113,7 @@ export default class Talentlodge extends Component
     })
      .then((response) => response.json())
      .then((skills) => {
-        
+
           let filtered = this.filterTracks(this.state.searchText, skills)
           this.setState({
             dataSource: this.state.dataSource.cloneWithRows(filtered)
@@ -127,16 +127,15 @@ export default class Talentlodge extends Component
 
 
   renderList(rowData) {
-    var that
     return (
-      <TouchableOpacity 
+      <TouchableOpacity
         key={rowData.id}
-        onPress={() => this._onPressButton(rowData.name)} 
+        onPress={() => this._onPressButton(rowData.name)}
         carita={rowData.name}
         style={{
-          height: 70, 
+          height: 70,
           flex:1,
-          flexDirection: 'column', 
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           borderBottomColor: 'white',
@@ -151,7 +150,7 @@ export default class Talentlodge extends Component
 
 
 
-  
+
 
 
   _onPressButton(skill)
@@ -160,7 +159,7 @@ export default class Talentlodge extends Component
       this.searchUsers(skill);
   }
 
-  
+
 
 
    searchUsers(skill){
@@ -200,7 +199,7 @@ export default class Talentlodge extends Component
             <Animated.View style={[styles.logoContainer, {flex: this.state.f, width: this.state.w}]}>
               <Image style={styles.logo} source={require('../image/talentlodgelogo2.png')} />
             </ Animated.View>
-            <Text 
+            <Text
             style={{textAlign:'center', color:'white'}}
             >A community driven talent database where talented individuals can search and meet each other.</Text>
           </ Animated.View>
@@ -208,12 +207,12 @@ export default class Talentlodge extends Component
 
 
 
-        
+
          <View  style={styles.inputContainer}>
-             <TextInput 
-                 underlineColorAndroid="rgba(0, 0, 0, 0)" 
-                 style={styles.searchBox} 
-                 placeholder="Search for a skill" 
+             <TextInput
+                 underlineColorAndroid="rgba(0, 0, 0, 0)"
+                 style={styles.searchBox}
+                 placeholder="Search for a skill"
                  onChange={this.updateSearch.bind(this)}
              />
          </View>
@@ -221,7 +220,7 @@ export default class Talentlodge extends Component
 
         <View style={styles.listContainer} >
           <View  style={styles.listContainer}>
-             <ListView 
+             <ListView
               enableEmptySections={true}
               dataSource={this.state.dataSource} renderRow={this.renderList.bind(this)}/>
            </View>
@@ -235,7 +234,7 @@ export default class Talentlodge extends Component
 var styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: '#111', 
+    backgroundColor: '#111',
   },
   logoCenter: {
     flexDirection: 'column',

@@ -14,17 +14,18 @@ import {
 
 import Talentlodge from './talentlodge.js';
 import Results from './results.js';
-
+import UserProfile from './user_profile.js';
 
 const routes = [
-  {title: 'First Scene', index: 0, users: []},
-  {title: 'Second Scene', index: 1, users: []},
+  {index: 0, users:[]},
+  {index: 1, users:[]},
+  {index: 2}
 ];
 
 let usersResult = [];
 
-export default class Bootstrap extends Component 
-{ 
+export default class Bootstrap extends Component
+{
 
 	navigatorRenderScene(route, navigator){
 		let navObject = {'routes': routes, 'index': route.index, 'navigator': navigator}
@@ -34,6 +35,9 @@ export default class Bootstrap extends Component
 		        break;
 		    case 1:
 		        return (<Results navigator={navigator} users={route.users} />);
+		        break;
+        case 2:
+		        return (<UserProfile navigator={navigator} email={route.email} />);
 		        break;
 		    default:
 		        return (<Talentlodge />);

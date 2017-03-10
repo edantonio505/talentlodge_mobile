@@ -10,8 +10,8 @@ import {
 
 
 
-export default class Results extends Component 
-{ 
+export default class Results extends Component
+{
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -22,12 +22,16 @@ export default class Results extends Component
 
 
 
+  onPressButton(email){
+    this.props.navigator.push({index:2, email:email})
+  }
+
 
   renderUsersRow(rowData){
-    console.log(rowData._source.avatar);
-    let imageURI = 'https://i.vimeocdn.com/portrait/58832_300x300.jpg';
     return (
-        <TouchableOpacity style={styles.listButtons} >
+        <TouchableOpacity style={styles.listButtons}
+          onPress={() => this.onPressButton(rowData._source.email)}
+        >
           <View style={{flex:1, flexDirection: 'row'}}>
             <View style={{ width: 60, height: 60, flex:1, padding:10, flexDirection: 'row'}}>
               <Image style={{width: 60, height: 60, borderRadius: 30}} resizeMode={'cover'} source={{uri: String(rowData._source.avatar) }} />
@@ -41,7 +45,7 @@ export default class Results extends Component
     );
   }
 
-  render (){  
+  render (){
     return (
         <View style={styles.container}>
           <View>
@@ -60,8 +64,8 @@ export default class Results extends Component
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column', 
-    justifyContent: 'center', 
+    flexDirection: 'column',
+    justifyContent: 'center',
     backgroundColor: 'black'
   },
 
@@ -89,5 +93,3 @@ var styles = StyleSheet.create({
     borderBottomWidth: 0.5
   }
 });
-
-

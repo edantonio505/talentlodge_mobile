@@ -7,8 +7,40 @@ import {
 
 
 
+
+/*=============================================
+          skill api base config
+===============================================*/
+    // let base = 'http://dev.talentlodge.com/api/';
+    let base = 'http://192.168.0.13/api/';
+// -----------------------------------------------
+
+
+
 export default class UserProfile extends Component
 {
+  constructor(props) {
+    super(props);
+    this.state = {user: []};
+  }
+
+
+  getUserDetails(){
+    let email = this.props.email;
+
+    return fetch(base+'user/'+email)
+      .then((response) => response.json())
+      .then((details) => {
+        console.log(details);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+
+
+
   render (){
     return (
         <View style={styles.container} >

@@ -8,6 +8,12 @@ import {
   Image
 } from 'react-native';
 
+/*=============================================
+          skill api base config
+===============================================*/
+    let base = 'http://dev.talentlodge.com/api/';
+    // let base = 'http://192.168.0.13/api/';
+// -----------------------------------------------
 
 
 export default class Results extends Component
@@ -22,9 +28,18 @@ export default class Results extends Component
 
 
 
-  onPressButton(email){
-    this.props.navigator.push({index:2, email:email})
+  onPressButton(email)
+  {
+    fetch(base+'userprofile/'+email)
+      .then((response) => response.json())
+      .then((details) => {
+        this.props.navigator.push({index:2, user: details})
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
+
 
 
   renderUsersRow(rowData){

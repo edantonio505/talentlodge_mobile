@@ -24,8 +24,8 @@ import Results from './results.js';
 /*=============================================
           skill api base config
 ===============================================*/
-  // let base = 'http://dev.talentlodge.com/api/';
-  let base = 'http://192.168.0.13/api/';
+  let base = 'http://dev.talentlodge.com/api/';
+  // let base = 'http://192.168.0.13/api/';
 // -----------------------------------------------
 
 export default class Talentlodge extends Component

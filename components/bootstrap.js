@@ -37,7 +37,7 @@ export default class Bootstrap extends Component
 		        return (<Results navigator={navigator} users={route.users} />);
 		        break;
         case 2:
-		        return (<UserProfile navigator={navigator} email={route.email} />);
+		        return (<UserProfile navigator={navigator} user={route.user} />);
 		        break;
 		    default:
 		        return (<Talentlodge />);
